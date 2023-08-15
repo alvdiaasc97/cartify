@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CartifyApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(CartifyApplication.class, args);
+
 	}
 
 }
