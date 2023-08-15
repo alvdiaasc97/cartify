@@ -30,7 +30,7 @@ public class ProductController {
         return productRepository.findById(productId).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
     @PostMapping("/create")
-    public ResponseEntity<String> createCart(@RequestBody Product product) {
+    public ResponseEntity<String> createProduct(@RequestBody Product product) {
         try {
             //Save the cart
             productRepository.save(product);

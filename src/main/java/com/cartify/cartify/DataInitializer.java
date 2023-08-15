@@ -60,7 +60,5 @@ public class DataInitializer implements CommandLineRunner {
         cartService.createCart(cart2);
         cartService.addProduct(cart2.getId(), product3.getId());
         cartRepository.save(cart2);
-
-
     }
 }
