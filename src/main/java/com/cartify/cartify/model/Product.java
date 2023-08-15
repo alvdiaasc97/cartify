@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Product {
@@ -20,6 +18,8 @@ public class Product {
     private Cart cart;
 
     private Double price = 0.0;
+
+    private String description;
 
     public Long getId() {
         return id;
@@ -43,5 +43,13 @@ public class Product {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
