@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-
 @Entity
 public class Product {
     @Id
@@ -13,11 +12,7 @@ public class Product {
     @JdbcTypeCode(SqlTypes.BIGINT)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
-
-    private Double price = 0.0;
+    private Double amount = 0.0;
 
     private String description;
 
@@ -25,31 +20,23 @@ public class Product {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Double getAmount() {
+        return amount;
     }
 
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public String getDescription() {
-        return description;
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                ", amount=" + amount +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

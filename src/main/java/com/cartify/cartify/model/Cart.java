@@ -1,5 +1,6 @@
 package com.cartify.cartify.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
@@ -15,19 +16,17 @@ public class Cart {
     @Column(name = "id", nullable = false)
     @JdbcTypeCode(SqlTypes.BIGINT)
     private Long id;
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "cart_product",
+            joinColumns = @JoinColumn(name = "cart_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> products = new ArrayList<>();
 
-    private Double amount = 0.0;
-
+    @Column(name = "activity_time")
     private LocalDateTime activityTime;
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public List<Product> getProducts(){
@@ -39,16 +38,8 @@ public class Cart {
         this.products = products;
     }
 
-    public Double getAmount() {
-        return products.stream().mapToDouble(Product::getPrice).sum();
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    public LocalDateTime getActivityTime() {
-        return activityTime;
+    public Double getTotalPrice() {
+        return products.stream().mapToDouble(Product::getAmount).sum();
     }
 
     public void setActivityTime(LocalDateTime activityTime) {
@@ -57,10 +48,17 @@ public class Cart {
 
     @Override
     public String toString() {
-        return "Cart{" +
-                "id=" + id +
-                ", products=" + products +
-                ", amount=" + amount +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("Cart ID: ").append(id).append("\n");
+        sb.append("Products:\n");
+
+        for (Product product : products) {
+            sb.append(product.toString()).append("\n");
+        }
+        sb.append("Total:" + getTotalPrice());
+
+        return sb.toString();
     }
+
+
 }
